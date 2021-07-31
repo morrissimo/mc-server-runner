@@ -17,7 +17,7 @@ VERSION=${1:-dev}
 for GOOS in darwin linux; do
     for GOARCH in 386 amd64 arm64; do
         echo "* Building $VERSION $GOOS/$GOARCH"
-	    go build -o ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner main.go
+	    GOOS=$GOOS GOARCH=$GOARCH go build -o ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner main.go
         if [ -n "$COMPRESS" ]; then
             echo "** Compressing"
             tar -czf "./dist/mc-server-runner.$VERSION.$GOOS.$GOARCH.tar.gz" ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner
@@ -29,7 +29,7 @@ done
 GOOS=windows
 for GOARCH in 386 amd64; do
     echo "* Building $VERSION $GOOS/$GOARCH"
-    go build -o ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner main.go
+    GOOS=$GOOS GOARCH=$GOARCH go build -o ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner main.go
     if [ -n "$COMPRESS" ]; then
         echo "** Compressing"
         tar -czf "./dist/mc-server-runner.$VERSION.$GOOS.$GOARCH.tar.gz" ./build/$VERSION/$GOOS/$GOARCH/mc-server-runner
